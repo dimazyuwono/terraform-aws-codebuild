@@ -167,7 +167,7 @@ variable "report_build_status" {
 
 variable "vpc_id" {
   type    = "string"
-  default = "" 
+  default = ""
 }
 
 variable "subnet_ids" {

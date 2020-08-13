@@ -142,7 +142,7 @@ data "aws_iam_policy_document" "permissions" {
     effect = "Allow"
 
     resources = [
-      "arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.default.name}:network-interface/*",
+      "arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:network-interface/*",
     ]
     condition = {
       test     = "StringEquals"

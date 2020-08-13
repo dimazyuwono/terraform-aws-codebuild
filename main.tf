@@ -151,7 +151,7 @@ data "aws_iam_policy_document" "permissions" {
       test     = "StringEquals"
       variable = "ec2:Subnet"
 
-      values = ["${var.subnet_ids}"]
+      values = ["arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:subnet/*"]
     }
 
     condition = {

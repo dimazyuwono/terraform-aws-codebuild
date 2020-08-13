@@ -167,7 +167,8 @@ resource "aws_codebuild_project" "default" {
   build_timeout = "${var.build_timeout}"
 
   artifacts {
-    type = "${var.artifact_type}"
+    type     = "${var.artifact_type}"
+    location = "${var.artifact_location}"
   }
 
   # The cache as a list with a map object inside.

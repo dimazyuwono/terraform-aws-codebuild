@@ -118,6 +118,13 @@ data "aws_iam_policy_document" "permissions" {
       "logs:CreateLogStream",
       "logs:PutLogEvents",
       "ssm:GetParameters",
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeDhcpOptions",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeVpcs",
     ]
 
     effect = "Allow"
@@ -125,6 +132,25 @@ data "aws_iam_policy_document" "permissions" {
     resources = [
       "*",
     ]
+  }
+  statement {
+    sid = ""
+
+    actions = [
+      "ec2:DescribeVpcs",
+    ]
+    effect = "Allow"
+
+    resources = [
+      "arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.default.name}:network-interface/*",
+    ]
+    condition = {
+      test     = "StringEquals"
+      variable = "ec2:Subnet"
+
+      values = [${var.subnet_ids}]
+
+    }
   }
 }
 
@@ -213,6 +239,12 @@ resource "aws_codebuild_project" "default" {
     type                = "${var.source_type}"
     location            = "${var.source_location}"
     report_build_status = "${var.report_build_status}"
+  }
+
+  vpc_config {
+    vpc_id             = "${var.vpc_id}"
+    subnets            = ["${var.subnet_ids}"]
+    security_group_ids = ["${var.security_groups}"]
   }
 
   tags = "${module.label.tags}"

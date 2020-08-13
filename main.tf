@@ -148,7 +148,7 @@ data "aws_iam_policy_document" "permissions" {
       test     = "StringEquals"
       variable = "ec2:Subnet"
 
-      values = [${var.subnet_ids}]
+      values = ["${var.subnet_ids}"]
 
     }
   }

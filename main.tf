@@ -157,7 +157,7 @@ data "aws_iam_policy_document" "permissions" {
     condition = {
       test     = "StringEquals"
       variable = "ec2:AuthorizedService"
-      values   = "codebuild.amazonaws.com"
+      values   = ["codebuild.amazonaws.com"]
     }
   }
 }
